@@ -1,0 +1,20 @@
+{
+  "name": "formbay-openai",
+  "interface": {
+    "displayName": "Formbay Openai"
+  },
+  "plugins": [
+    {
+      "name": "fb-job-push",
+      "source": {
+        "source": "local",
+        "path": "./plugins/fb-job-push"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

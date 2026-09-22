@@ -1,0 +1,27 @@
+{
+  "name": "fb-job-push",
+  "version": "0.2.0",
+  "description": "Create and look up Formbay installation jobs through the authenticated FB Job Push MCP server.",
+  "author": {
+    "name": "Formbay Trading Pty Ltd",
+    "email": "support@formbay.com.au"
+  },
+  "repository": "https://github.com/formbay/AI-plugins-mvp",
+  "license": "SEE LICENSE IN LICENSE",
+  "keywords": ["formbay", "jobs", "solar", "battery", "swh", "mcp"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Formbay Job Push",
+    "shortDescription": "Create and look up Formbay installation jobs.",
+    "longDescription": "Use authenticated Formbay tools to look up and create installation jobs, prepare Pylon imports, and calculate solar STC and battery BSTC estimates with exact postcode zones and dated battery factors.",
+    "developerName": "Formbay Trading Pty Ltd",
+    "category": "Productivity",
+    "capabilities": ["Read", "Write"],
+    "defaultPrompt": [
+      "Show my Formbay jobs.",
+      "Calculate solar STCs and battery BSTCs for my installation.",
+      "Help me prepare a PV and battery job for Formbay."
+    ]
+  },
+  "mcpServers": "./.mcp.json"
+}

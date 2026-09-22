@@ -1,0 +1,4 @@
+interface:
+  display_name: "Pylon to Formbay"
+  short_description: "Read a selected Pylon project into a Formbay draft."
+  default_prompt: "Use $pylon-import to prepare this Pylon project for Formbay."

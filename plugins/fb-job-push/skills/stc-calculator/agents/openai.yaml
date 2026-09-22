@@ -1,0 +1,4 @@
+interface:
+  display_name: "Solar STC and Battery BSTC"
+  short_description: "Calculate certificates using postcode and date rules."
+  default_prompt: "Use $stc-calculator to estimate solar STCs and battery BSTCs."
