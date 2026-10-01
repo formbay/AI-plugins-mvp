@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "formbay-jobs-demo": {
+      "type": "http",
+      "url": "https://mcpui.13-236-107-181.nip.io/mcp"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "name": "formbay-jobs-demo",
+  "version": "0.1.0",
+  "description": "Demo MCP app: list and create fake Formbay PV jobs, shown as an interactive table in chat.",
+  "author": {
+    "name": "Formbay Trading Pty Ltd",
+    "email": "support@formbay.com.au"
+  },
+  "repository": "https://github.com/formbay/AI-plugins-mvp",
+  "license": "SEE LICENSE IN LICENSE",
+  "keywords": ["formbay", "jobs", "demo", "mcp", "mcp-app", "ui"],
+  "interface": {
+    "displayName": "Formbay Jobs Demo",
+    "shortDescription": "List and create fake Formbay jobs with a visual table.",
+    "longDescription": "A demo MCP app with fake data. The list_jobs and create_job tools return results that ChatGPT renders as an interactive jobs table, using the MCP Apps UI standard. No login and no real Formbay data.",
+    "developerName": "Formbay Trading Pty Ltd",
+    "category": "Productivity",
+    "capabilities": ["Read", "Write"],
+    "defaultPrompt": [
+      "List my jobs.",
+      "Show only pending jobs.",
+      "Create a new demo job."
+    ]
+  },
+  "mcpServers": "./.mcp.json"
+}

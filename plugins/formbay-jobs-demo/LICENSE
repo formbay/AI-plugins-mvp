@@ -1,0 +1,192 @@
+Formbay AI Connectors — Proprietary Software License
+
+Copyright (c) 2026 Formbay Trading Pty Ltd (ACN 146 464 995 / ABN 31 146 464 995).
+All rights reserved.
+
+================================================================================
+1. DEFINITIONS
+================================================================================
+
+"Licensor" means Formbay Trading Pty Ltd (ACN 146 464 995), its successors and
+assigns.
+
+"Software" means the source code, object code, plugins, connectors, extensions,
+configuration, documentation, and all other materials contained in this
+repository (the "ai-connectors" repository) and any updates, modifications, or
+derivative works thereof provided by the Licensor.
+
+"Formbay Platform" means the software platforms, services, and APIs operated by
+the Licensor, including the Model Context Protocol (MCP) server through which the
+Software operates.
+
+"Authorized Customer" means a customer of the Licensor who has been issued, and
+holds at the relevant time, valid and active credentials to access the Formbay
+Platform, and whose right to access has not been suspended or revoked.
+
+"You" means the individual or legal entity exercising rights under this License.
+
+================================================================================
+2. GRANT OF LICENSE
+================================================================================
+
+Subject to Your continuous compliance with the terms of this License, the
+Licensor grants You a limited, non-exclusive, non-transferable, non-sublicensable,
+revocable license to install and use the Software solely:
+
+  (a) if and for so long as You are an Authorized Customer;
+  (b) for Your own internal business purposes in connection with Your authorized
+      use of the Formbay Platform; and
+  (c) in accordance with all applicable Formbay Platform terms of service,
+      documentation, and the Licensor's written instructions.
+
+No rights are granted other than those expressly set out in this License.
+All rights not expressly granted are reserved by the Licensor.
+
+================================================================================
+3. RESTRICTIONS
+================================================================================
+
+Except to the extent that the following restrictions are prohibited by
+applicable law (and only to that extent), You must NOT, and must not permit any
+third party to:
+
+  (a) copy, reproduce, or distribute the Software, in whole or in part, to any
+      third party;
+  (b) modify, adapt, translate, or create derivative works of the Software;
+  (c) sell, rent, lease, lend, sublicense, assign, host as a service, or
+      otherwise commercially exploit or make the Software available to any third
+      party;
+  (d) reverse engineer, decompile, disassemble, or otherwise attempt to derive
+      the source code, structure, or underlying ideas of any non-source-provided
+      component of the Software, or of the Formbay Platform or MCP server;
+  (e) remove, alter, or obscure any copyright, trademark, or other proprietary
+      notices contained in the Software;
+  (f) use the Software to access, or attempt to access, the Formbay Platform or
+      any data without valid authorization, or to circumvent any authentication,
+      security, rate-limiting, or access control;
+  (g) use the Software in breach of any applicable law or regulation, or in any
+      manner that could damage, disable, overburden, or impair the Formbay
+      Platform; or
+  (h) use the Software after You cease to be an Authorized Customer.
+
+================================================================================
+4. AUTHENTICATION AND ACCESS
+================================================================================
+
+The Software operates against the Formbay Platform and its MCP server, which are
+protected by authentication. The Software does not grant any right of access to
+the Formbay Platform or to any data. Access is governed separately by Your
+Formbay Platform agreement and is contingent on valid, active credentials. The
+Licensor may suspend, revoke, or modify access, the MCP server, or the Software
+at any time without notice.
+
+================================================================================
+5. OWNERSHIP
+================================================================================
+
+The Software is licensed, not sold. The Licensor and its licensors retain all
+right, title, and interest in and to the Software, including all intellectual
+property rights. The "Formbay" name, logo, and all related marks are trademarks
+of the Licensor and may not be used without prior written permission.
+
+================================================================================
+6. ARTIFICIAL INTELLIGENCE OUTPUT DISCLAIMER
+================================================================================
+
+The Software integrates with third-party large language model and artificial
+intelligence services (including, without limitation, those provided by
+Anthropic and OpenAI). You acknowledge and agree that:
+
+  (a) output generated by such AI services is probabilistic and may be
+      inaccurate, incomplete, outdated, misleading, or otherwise erroneous;
+  (b) AI output does not constitute professional, legal, financial, engineering,
+      compliance, or other advice, and must not be relied upon as such;
+  (c) You are solely responsible for independently reviewing, verifying, and
+      validating any AI output before relying on or acting upon it, particularly
+      for any decision affecting business, regulatory, financial, or safety
+      outcomes; and
+  (d) the Licensor does not control, and is not responsible for, the behaviour,
+      availability, or output of any third-party AI service.
+
+================================================================================
+7. DISCLAIMER OF WARRANTIES
+================================================================================
+
+TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE SOFTWARE IS PROVIDED
+"AS IS" AND "AS AVAILABLE", WITH ALL FAULTS AND WITHOUT WARRANTY OF ANY KIND.
+THE LICENSOR EXPRESSLY DISCLAIMS ALL WARRANTIES, REPRESENTATIONS, AND CONDITIONS,
+WHETHER EXPRESS, IMPLIED, STATUTORY, OR OTHERWISE, INCLUDING ANY IMPLIED
+WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE,
+ACCURACY, AND NON-INFRINGEMENT. THE LICENSOR DOES NOT WARRANT THAT THE SOFTWARE
+WILL BE UNINTERRUPTED, ERROR-FREE, SECURE, OR THAT IT WILL PRODUCE ACCURATE OR
+RELIABLE RESULTS.
+
+Nothing in this License excludes, restricts, or modifies any consumer guarantee,
+right, or remedy conferred by the Australian Consumer Law (Schedule 2 to the
+Competition and Consumer Act 2010 (Cth)) or any other applicable law that cannot
+lawfully be excluded ("Non-Excludable Rights"). To the extent permitted by law,
+the Licensor's liability for breach of any Non-Excludable Right is limited, at
+the Licensor's option, to the resupply of the Software or the cost of having the
+Software resupplied.
+
+================================================================================
+8. LIMITATION OF LIABILITY
+================================================================================
+
+TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, AND SUBJECT TO ANY
+NON-EXCLUDABLE RIGHTS:
+
+  (a) IN NO EVENT WILL THE LICENSOR BE LIABLE FOR ANY INDIRECT, INCIDENTAL,
+      SPECIAL, CONSEQUENTIAL, EXEMPLARY, OR PUNITIVE DAMAGES, OR FOR ANY LOSS OF
+      PROFITS, REVENUE, DATA, GOODWILL, OR BUSINESS OPPORTUNITY, ARISING OUT OF
+      OR IN CONNECTION WITH THE SOFTWARE OR THIS LICENSE, WHETHER IN CONTRACT,
+      TORT (INCLUDING NEGLIGENCE), STATUTE, OR OTHERWISE, EVEN IF ADVISED OF THE
+      POSSIBILITY OF SUCH DAMAGES;
+
+  (b) THE LICENSOR WILL NOT BE LIABLE FOR ANY LOSS OR DAMAGE ARISING FROM
+      UNEXPECTED, ERRONEOUS, OR HARMFUL OUTPUT OR BEHAVIOUR OF THE SOFTWARE OR
+      OF ANY INTEGRATED THIRD-PARTY AI SERVICE, OR FROM YOUR RELIANCE ON SUCH
+      OUTPUT; AND
+
+  (c) THE LICENSOR'S TOTAL AGGREGATE LIABILITY ARISING OUT OF OR IN CONNECTION
+      WITH THE SOFTWARE OR THIS LICENSE WILL NOT EXCEED ONE HUNDRED AUSTRALIAN
+      DOLLARS (AUD $100).
+
+================================================================================
+9. TERMINATION
+================================================================================
+
+This License is effective until terminated. It terminates automatically, without
+notice, if You breach any of its terms or cease to be an Authorized Customer. The
+Licensor may terminate this License at any time. Upon termination, You must cease
+all use of the Software and destroy all copies in Your possession or control.
+Sections 3, 5, 6, 7, 8, 9, 10, and 11 survive termination.
+
+================================================================================
+10. GOVERNING LAW AND JURISDICTION
+================================================================================
+
+This License is governed by the laws of the State of New South Wales, Australia,
+without regard to its conflict-of-laws principles. The parties submit to the
+exclusive jurisdiction of the courts of New South Wales and any courts entitled
+to hear appeals from those courts. The United Nations Convention on Contracts for
+the International Sale of Goods does not apply.
+
+================================================================================
+11. GENERAL
+================================================================================
+
+This License constitutes the entire agreement between You and the Licensor
+regarding the Software and supersedes all prior or contemporaneous understandings.
+If any provision is held unenforceable, it will be modified to the minimum extent
+necessary, and the remaining provisions will remain in full force. The Licensor's
+failure to enforce any provision is not a waiver. You may not assign this License
+without the Licensor's prior written consent; the Licensor may assign it freely.
+
+For licensing inquiries, contact: support@formbay.com.au
+
+================================================================================
+
+NOTE: This license has been prepared with the assistance of an AI tool and has
+not, by itself, been reviewed by a qualified legal practitioner. Formbay should
+have it reviewed by its legal advisers before relying on it.
