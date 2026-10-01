@@ -49,6 +49,20 @@ server tools) are documented in **`CONNECTORS.md`**.
 > server URL is not yet published — both will be filled in once the MCP server
 > ships. Until then the plugins are scaffolding and are not yet functional.
 
+### Demo: MCP Apps showcase (`mcp-apps-demo`)
+
+An exploration of [MCP Apps](https://apps.extensions.modelcontextprotocol.io/api/documents/overview.html):
+a Python MCP server whose tools open an interactive UI inside Claude (jobs
+dashboard, chart, pre-filled form, live updates) using **fake demo data**. Its
+"What works" tab reports which MCP Apps UI features the current Claude host
+supports. Requires [uv](https://docs.astral.sh/uv/). See
+[`claude/plugins/mcp-apps-demo/README.md`](claude/plugins/mcp-apps-demo/README.md).
+
+```text
+/plugin marketplace add formbay/AI-plugins-mvp
+/plugin install mcp-apps-demo@formbay-ai-connectors
+```
+
 ---
 
 ## Repository layout

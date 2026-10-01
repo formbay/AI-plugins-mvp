@@ -1,0 +1,30 @@
+{
+  "name": "formbay-mcp-apps-demo",
+  "version": "1.0.0",
+  "description": "Formbay MCP Apps showcase (demo)",
+  "scripts": {
+    "build:view": "cross-env INPUT=mcp-app.html vite build",
+    "build": "tsc --noEmit && cross-env INPUT=mcp-app.html vite build",
+    "watch": "cross-env NODE_ENV=development INPUT=mcp-app.html vite build --watch"
+  },
+  "author": "Formbay Trading Pty Ltd",
+  "license": "SEE LICENSE IN LICENSE",
+  "type": "module",
+  "dependencies": {
+    "@modelcontextprotocol/client": "^2.2.0",
+    "@modelcontextprotocol/ext-apps": "^2.0.3",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.3",
+    "cross-env": "^10.1.0",
+    "typescript": "^5.9.3",
+    "vite": "^6.4.3",
+    "vite-plugin-singlefile": "^2.3.3"
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true,
+    "esbuild@0.25.12": true
+  },
+  "private": "true"
+}

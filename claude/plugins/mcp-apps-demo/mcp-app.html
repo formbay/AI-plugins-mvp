@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <title>Formbay Solar Jobs</title>
+</head>
+<body>
+  <!-- Shown instead of the app when a newer copy of it opened further down the chat -->
+  <div class="superseded-bar" id="superseded-bar" hidden>
+    <span data-icon="info"></span>
+    <span>This app was updated in a newer message below <strong>↓</strong></span>
+    <button class="ghost small" id="restore-btn">Show here instead</button>
+  </div>
+
+  <main class="main" id="main">
+    <!-- Header -->
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark" data-icon="sun"></span>
+        <div>
+          <h1>Formbay Solar Jobs</h1>
+          <p class="subtitle">A mini app running inside Claude · demo data</p>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <div class="segmented" role="group" aria-label="Window size">
+          <button data-mode="inline" title="Show inside the chat"><span data-icon="inline"></span><span class="label">Inline</span></button>
+          <button data-mode="fullscreen" title="Use the whole screen"><span data-icon="expand"></span><span class="label">Full screen</span></button>
+          <button data-mode="pip" title="Small floating window"><span data-icon="pip"></span><span class="label">Float</span></button>
+        </div>
+        <button id="close-btn" class="icon-btn" title="Close this app"><span data-icon="close"></span></button>
+      </div>
+    </header>
+
+    <!-- Tabs -->
+    <nav class="tabs" role="tablist">
+      <button role="tab" data-tab="start"><span data-icon="home"></span>Start here</button>
+      <button role="tab" data-tab="dashboard"><span data-icon="chart"></span>Dashboard</button>
+      <button role="tab" data-tab="form"><span data-icon="form"></span>New job</button>
+      <button role="tab" data-tab="live"><span data-icon="bolt"></span>Live</button>
+      <button role="tab" data-tab="features"><span data-icon="check"></span>What works</button>
+    </nav>
+
+    <!-- Connection / error banner -->
+    <div class="banner" id="banner" hidden>
+      <span data-icon="alert"></span>
+      <span id="banner-text"></span>
+      <button class="ghost small" id="banner-retry">Try again</button>
+    </div>
+
+    <!-- ============ START HERE ============ -->
+    <section class="panel" data-panel="start">
+      <div class="hero">
+        <h2>Welcome! This is an app <em>inside</em> Claude.</h2>
+        <p>Normally Claude answers with text. Here, Claude opened a real screen you can click: charts, tables, forms and buttons.</p>
+        <ol class="steps">
+          <li><span class="step-num">1</span><div><strong>You ask</strong><br><span class="muted">"Show me my solar jobs"</span></div></li>
+          <li><span class="step-num">2</span><div><strong>Claude calls our server</strong><br><span class="muted">it fetches the jobs</span></div></li>
+          <li><span class="step-num">3</span><div><strong>This app appears</strong><br><span class="muted">you click, Claude follows along</span></div></li>
+        </ol>
+      </div>
+
+      <div class="card">
+        <h3><span data-icon="chat"></span> Try asking Claude</h3>
+        <p class="muted small">Click one. It's sent to the chat as if you typed it.</p>
+        <div class="chips" id="example-prompts"></div>
+      </div>
+
+      <h3 class="section-title">Things you can do here</h3>
+      <div class="cards" id="feature-cards"></div>
+    </section>
+
+    <!-- ============ DASHBOARD ============ -->
+    <section class="panel" data-panel="dashboard" hidden>
+      <div class="help">
+        <span data-icon="info"></span>
+        <div><strong>What is this?</strong> Your solar jobs at a glance. <strong>Try:</strong> pick a state or installer, change a job's status, or click a row and press "Ask Claude". You can also just ask Claude: <em>"show QLD jobs done by Aman"</em>.</div>
+      </div>
+
+      <div class="toolbar">
+        <label class="field-inline">Region
+          <select id="region">
+            <option value="All">All states</option><option>NSW</option><option>VIC</option><option>QLD</option><option>SA</option><option>WA</option>
+          </select>
+        </label>
+        <label class="field-inline">Installer
+          <select id="installer"><option value="">All installers</option></select>
+        </label>
+        <label class="search">
+          <span data-icon="search"></span>
+          <input id="search" type="search" placeholder="Search customer, suburb, installer or job ID">
+        </label>
+        <button id="refresh-btn" class="ghost"><span data-icon="refresh"></span>Refresh</button>
+        <span class="muted small" id="generated-at"></span>
+      </div>
+
+      <div class="card empty-state" id="empty-state" hidden></div>
+
+      <div class="dash-content" id="dash-content">
+      <div class="tiles" id="tiles">
+        <div class="tile skeleton"></div><div class="tile skeleton"></div><div class="tile skeleton"></div><div class="tile skeleton"></div>
+      </div>
+
+      <figure class="card chart-card">
+        <figcaption>
+          <span>STCs created per month</span>
+          <span class="muted small">STC = Small-scale Technology Certificate, the credit a solar install earns</span>
+        </figcaption>
+        <div class="chart-wrap">
+          <svg id="chart" role="img" aria-label="STCs per month bar chart" preserveAspectRatio="xMidYMid meet"></svg>
+          <div class="tooltip" id="chart-tip" hidden></div>
+        </div>
+      </figure>
+
+      <div class="card table-card">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Job</th><th>Customer</th><th>Location</th><th>Installer</th><th class="num">Size</th><th class="num">STCs</th><th>Status</th></tr></thead>
+            <tbody id="jobs-body"><tr><td colspan="7" class="empty">Loading jobs…</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card selection" id="selection-card">
+        <div id="selection-text" class="selection-empty">
+          <span data-icon="pointer"></span>
+          <span>Click a row above to select a job. Claude will know which one you picked.</span>
+        </div>
+        <div class="actions">
+          <button id="ask-btn" disabled data-needs="message"><span data-icon="chat"></span>Ask Claude about this job</button>
+          <button id="summarise-btn" class="ghost" data-needs="message"><span data-icon="sparkle"></span>Summarise with AI</button>
+          <button id="export-btn" class="ghost" data-needs="downloadFile"><span data-icon="download"></span>Export CSV</button>
+          <button id="link-btn" class="ghost" data-needs="openLinks"><span data-icon="link"></span>CER website</button>
+        </div>
+        <div id="ai-output" class="ai-output" hidden></div>
+      </div>
+      </div>
+    </section>
+
+    <!-- ============ NEW JOB ============ -->
+    <section class="panel" data-panel="form" hidden>
+      <div class="help">
+        <span data-icon="info"></span>
+        <div id="form-hint"><strong>What is this?</strong> A form to add a new job. <strong>Try:</strong> ask Claude <em>"Draft a solar job for Priya in Bondi NSW, 8.2 kW"</em> and watch it fill in by itself.</div>
+      </div>
+
+      <form id="job-form" class="card form" novalidate>
+        <label>Customer name
+          <input name="customer" required placeholder="e.g. Priya Sharma" autocomplete="off">
+          <span class="error-msg">Please enter the customer's name</span>
+        </label>
+        <label>Suburb
+          <input name="suburb" required placeholder="e.g. Bondi" autocomplete="off">
+          <span class="error-msg">Please enter the suburb</span>
+        </label>
+        <label>State
+          <select name="region"><option value="">Choose a state…</option><option>NSW</option><option>VIC</option><option>QLD</option><option>SA</option><option>WA</option></select>
+          <span class="error-msg">Please choose a state</span>
+        </label>
+        <label>System size (kW)
+          <input name="systemKw" type="number" step="0.1" min="0.1" max="100" required placeholder="e.g. 6.6">
+          <span class="error-msg">Enter a size between 0.1 and 100 kW</span>
+        </label>
+        <label>Installer
+          <select name="installer"><option value="">Not assigned yet</option><option>Aman Gill</option><option>Ben Carter</option><option>Chloe Tran</option><option>Dev Mehta</option></select>
+        </label>
+        <label class="wide"><span>Notes <span class="muted">(optional)</span></span>
+          <textarea name="notes" rows="3" placeholder="e.g. Two-storey, tile roof, switchboard upgrade needed"></textarea>
+        </label>
+        <div class="wide estimate" id="estimate">
+          <span data-icon="sun"></span>
+          <span>Fill in the state and size to see an STC estimate.</span>
+        </div>
+        <div class="wide actions">
+          <button type="submit" id="submit-btn"><span data-icon="check"></span>Submit job</button>
+          <button type="reset" class="ghost">Clear</button>
+        </div>
+      </form>
+      <div class="card success" id="form-success" hidden></div>
+    </section>
+
+    <!-- ============ LIVE ============ -->
+    <section class="panel" data-panel="live" hidden>
+      <div class="help">
+        <span data-icon="info"></span>
+        <div><strong>What is this?</strong> Numbers that update by themselves every 2 seconds, like a live monitor. It pauses when you scroll away, to save battery.</div>
+      </div>
+      <div class="toolbar">
+        <button id="poll-btn"><span data-icon="play"></span>Start live updates</button>
+        <span class="live-badge" id="live-badge" hidden><span class="pulse"></span>LIVE</span>
+      </div>
+      <div class="tiles" id="live-tiles">
+        <div class="tile"><div class="tile-label">Fleet output</div><div class="tile-value">–</div></div>
+        <div class="tile"><div class="tile-label">Installers on site</div><div class="tile-value">–</div></div>
+        <div class="tile"><div class="tile-label">Last update</div><div class="tile-value">–</div></div>
+      </div>
+      <figure class="card chart-card">
+        <figcaption><span>Total power from all systems (kW)</span><span class="muted small">last 30 readings</span></figcaption>
+        <svg id="sparkline" role="img" aria-label="Fleet output over time" preserveAspectRatio="none"></svg>
+      </figure>
+    </section>
+
+    <!-- ============ WHAT WORKS ============ -->
+    <section class="panel" data-panel="features" hidden>
+      <div class="help">
+        <span data-icon="info"></span>
+        <div><strong>What is this?</strong> A live check of which app features <em>this</em> version of Claude supports. Green = works here.</div>
+      </div>
+      <p class="host-line" id="host-line"></p>
+      <div class="feature-groups" id="features"></div>
+
+      <div class="card">
+        <h3><span data-icon="wrench"></span> Quick tests</h3>
+        <div class="actions">
+          <button id="guide-btn" class="ghost" data-needs="serverResources"><span data-icon="book"></span>Load a file from the server</button>
+          <button id="log-btn" class="ghost" data-needs="logging"><span data-icon="terminal"></span>Send a log message</button>
+        </div>
+        <div id="guide-output" class="ai-output" hidden></div>
+      </div>
+
+      <details class="card dev">
+        <summary>For developers: activity log</summary>
+        <ol class="log" id="event-log"></ol>
+      </details>
+      <details class="card dev">
+        <summary>For developers: host context</summary>
+        <pre id="host-context" class="code"></pre>
+      </details>
+    </section>
+
+    <!-- Toasts -->
+    <div class="toasts" id="toasts" aria-live="polite"></div>
+  </main>
+  <script type="module" src="/src/mcp-app.ts"></script>
+</body>
+</html>

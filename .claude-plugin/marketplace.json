@@ -13,7 +13,17 @@
     {
       "name": "fb-connector",
       "source": "./claude/plugins/fb-connector",
-      "description": "Formbay connector — read solar-proposal data from partner web apps (e.g. Pylon / app.getpylon.com) and push projects into the Formbay job queue via the fb-job-push MCP server.",
+      "description": "Formbay connector \u2014 read solar-proposal data from partner web apps (e.g. Pylon / app.getpylon.com) and push projects into the Formbay job queue via the fb-job-push MCP server.",
+      "version": "0.1.0",
+      "author": {
+        "name": "Formbay Trading Pty Ltd",
+        "email": "support@formbay.com.au"
+      }
+    },
+    {
+      "name": "mcp-apps-demo",
+      "source": "./claude/plugins/mcp-apps-demo",
+      "description": "Formbay MCP Apps showcase (demo data): a Python MCP server whose tools open an interactive UI inside Claude (dashboard, chart, form, live updates) and show which MCP Apps UI features the host supports.",
       "version": "0.1.0",
       "author": {
         "name": "Formbay Trading Pty Ltd",
