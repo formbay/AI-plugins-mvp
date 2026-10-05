@@ -7,7 +7,7 @@
 #     "starlette>=0.46.0",
 # ]
 # ///
-"""Formbay MCP Apps Showcase: a demo MCP server whose tools open an interactive UI in Claude.
+"""Formbay Solar Jobs: a small demo MCP App. Its tools open an interactive dashboard / form inside Claude.
 
 Run:
     uv run server.py            # HTTP on http://localhost:3001/mcp (basic-host, tunnels)
@@ -22,26 +22,23 @@ from __future__ import annotations
 import functools
 import math
 import os
-import random
 import sys
-import uuid
+import time
 from dataclasses import asdict, dataclass
 from datetime import date, datetime, timezone
 from pathlib import Path
-from typing import Annotated, Literal
+from typing import Annotated
 
-from mcp.server.apps import Apps
+from mcp.server.apps import Apps, ResourceCsp
 from mcp.server.mcpserver import MCPServer
 from mcp_types import CallToolResult, TextContent
 from pydantic import Field
 
 HERE = Path(__file__).resolve().parent
 VIEW_URI = "ui://formbay-demo/showcase.html"
-GUIDE_URI = "formbay://guides/stc-basics"
 HOST = os.environ.get("HOST", "127.0.0.1")
 PORT = int(os.environ.get("PORT", "3001"))
 
-Status = Literal["Draft", "Submitted", "Approved", "Rejected"]
 STATES = ["NSW", "VIC", "QLD", "SA", "WA"]
 
 # Friendly spellings Claude (or a user) might use for a state.
@@ -182,15 +179,21 @@ def text_summary(d: dict) -> str:
     return "\n".join(lines)
 
 
-def result(text: str, structured: dict | None = None, *, view_uuid: bool = False, error: bool = False) -> CallToolResult:
-    """Build a tool result with a text fallback (for non-UI hosts) plus data for the View."""
-    return CallToolResult(
-        content=[TextContent(type="text", text=text)],
-        structured_content=structured,
-        is_error=error,
-        # A per-call id the View uses as its localStorage key for persisted state.
-        meta={"viewUUID": str(uuid.uuid4())} if view_uuid else None,
-    )
+_call_seq = 0
+
+
+def result(text: str, structured: dict | None = None, *, opens_view: bool = False, error: bool = False) -> CallToolResult:
+    """Tool result = text for Claude (and non-UI hosts) + structured data for the View.
+
+    Results that open a View carry an election key {createdAt, seq}. When Claude
+    calls a tool twice, every copy of the View compares keys and only the newest
+    stays active (see Claude docs: "Supersede older widget instances").
+    """
+    global _call_seq
+    if opens_view and structured is not None:
+        _call_seq += 1
+        structured = {**structured, "createdAt": int(time.time() * 1000), "seq": _call_seq}
+    return CallToolResult(content=[TextContent(type="text", text=text)], structured_content=structured, is_error=error)
 
 
 def friendly(fn):
@@ -238,7 +241,7 @@ def show_solar_dashboard(
     if min_stcs < 0:
         raise FriendlyError("The minimum number of STCs can't be negative. Use 0 or more.")
     data = dashboard_data(normalize_state(region, allow_all=True), match_installer(installer), min_stcs)
-    return result(text_summary(data), data, view_uuid=True)
+    return result(text_summary(data), data, opens_view=True)
 
 
 @apps.tool(
@@ -275,7 +278,7 @@ def draft_solar_job(
     missing = [label for key, label in labels.items() if not draft[key]]
     text = "Opened the new-job form" + (f" for {draft['customer']}" if draft["customer"] else "") + "."
     text += f" Still needed from the user: {', '.join(missing)}." if missing else f" All details filled (~{stcs} STCs); waiting for the user to submit."
-    return result(text, {"view": "form", "draft": draft, "missing": missing, "installers": installers()}, view_uuid=True)
+    return result(text, {"view": "form", "draft": draft, "missing": missing, "installers": installers()}, opens_view=True)
 
 
 # ---- App-only tools: hidden from Claude, callable only by the View ----
@@ -286,16 +289,6 @@ def draft_solar_job(
 def refresh_dashboard(region: str = "All", installer: str = "") -> CallToolResult:
     data = dashboard_data(normalize_state(region, allow_all=True), match_installer(installer))
     return result(text_summary(data), data)
-
-
-@apps.tool(resource_uri=VIEW_URI, visibility=["app"], description="Change the status of a demo job.")
-@friendly
-def update_job_status(job_id: str, status: Status) -> CallToolResult:
-    job = next((j for j in JOBS if j.id == job_id), None)
-    if job is None:
-        raise FriendlyError(f"Job {job_id} doesn't exist any more. Try refreshing.")
-    job.status = status
-    return result(f"{job_id} is now {status}", {"job": asdict(job)})
 
 
 @apps.tool(resource_uri=VIEW_URI, visibility=["app"], description="Save a new demo job from the form.")
@@ -321,19 +314,6 @@ def submit_job(customer: str, suburb: str, region: str, system_kw: float, instal
     return result(f"Created {job.id}", {"job": asdict(job)})
 
 
-@apps.tool(resource_uri=VIEW_URI, visibility=["app"], description="Live demo metrics for the polling panel.")
-@friendly
-def poll_live_stats() -> CallToolResult:
-    t = datetime.now(timezone.utc).timestamp()
-    stats = {
-        "at": datetime.now(timezone.utc).isoformat(),
-        # Fake "fleet output" curve so the sparkline moves.
-        "fleetOutputKw": round(420 + 120 * math.sin(t / 6) + random.random() * 30, 1),
-        "installersOnSite": 8 + random.randint(0, 4),
-    }
-    return result(f"{stats}", stats)
-
-
 # ---------------------------------------------------------------------------
 # Resources
 # ---------------------------------------------------------------------------
@@ -345,22 +325,14 @@ if not view_html.exists():
 apps.add_html_resource(
     VIEW_URI,
     view_html.read_text(encoding="utf-8"),
-    name="Formbay MCP Apps Showcase",
-    description="Interactive showcase of MCP Apps UI features",
-    prefers_border=True,
+    name="Formbay Solar Jobs",
+    description="Solar jobs dashboard and new-job form",
+    # Blend into the chat and let the host load its font (Claude theming guide).
+    prefers_border=False,
+    csp=ResourceCsp(resource_domains=["https://assets.claude.ai"]),
 )
 
-mcp = MCPServer("Formbay MCP Apps Showcase", version="1.0.0", extensions=[apps])
-
-
-# A plain (non-UI) resource the View reads with app.readServerResource().
-@mcp.resource(GUIDE_URI, name="STC basics guide", mime_type="text/markdown")
-def stc_guide() -> str:
-    return (
-        "STCs (Small-scale Technology Certificates) are created when an eligible solar system is installed.\n"
-        "The number depends on system size (kW), the postcode zone rating, and the deeming period.\n"
-        "This text was loaded from the Python MCP server with app.readServerResource()."
-    )
+mcp = MCPServer("Formbay Solar Jobs", version="1.0.0", extensions=[apps])
 
 
 if __name__ == "__main__":

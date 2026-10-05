@@ -1,7 +1,7 @@
 {
   "name": "mcp-apps-demo",
   "version": "0.1.0",
-  "description": "Formbay MCP Apps showcase: a demo Python MCP server whose tools open an interactive UI inside Claude (dashboard, chart, form, live polling) and exercise every MCP Apps feature. Demo data only.",
+  "description": "Formbay Solar Jobs: a small demo MCP App (Python server + interactive dashboard and form inside Claude). Demo data only.",
   "author": {
     "name": "Formbay Trading Pty Ltd",
     "email": "support@formbay.com.au"
