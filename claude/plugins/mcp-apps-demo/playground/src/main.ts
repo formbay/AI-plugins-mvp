@@ -63,7 +63,7 @@ const EXAMPLES = [
   "Show Ben's jobs in QLD",
   "Draft a new job for Shirin Karimi in Bondi NSW, 8.2 kW",
   "Create a new job",
-  "Show jobs in Tasmania",
+  "Show jobs in NSW",
 ];
 
 // ---------------------------------------------------------------------------
