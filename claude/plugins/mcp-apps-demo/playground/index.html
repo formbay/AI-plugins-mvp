@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <title>Formbay Playground</title>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">☀</span>
+      <div>
+        <strong>Formbay Playground</strong>
+        <span class="badge">pretend Claude</span>
+      </div>
+    </div>
+    <div class="top-right">
+      <span class="status" id="status">Connecting…</span>
+      <button class="ghost" id="theme-btn">☾ Dark</button>
+    </div>
+  </header>
+
+  <main class="chat">
+    <section class="welcome" id="welcome">
+      <h1>Try the Formbay Solar Jobs app</h1>
+      <p>This page <strong>pretends to be Claude</strong>, so you can try our MCP App without installing it.
+        Ask a question and the app opens as the answer, the same way it would inside Claude.</p>
+      <ol class="how">
+        <li><span>1</span>You ask a question</li>
+        <li><span>2</span>"Claude" picks a tool on our server</li>
+        <li><span>3</span>The app appears in the chat</li>
+      </ol>
+      <p class="muted small">There's no AI here: simple word matching picks the tool, and you can see which one it used.</p>
+      <div class="chips" id="welcome-examples"></div>
+    </section>
+
+    <div class="thread" id="thread"></div>
+  </main>
+
+  <footer class="composer-wrap">
+    <div class="chips examples" id="examples"></div>
+    <form class="composer" id="composer">
+      <input id="question" placeholder="Ask about solar jobs… e.g. Show QLD jobs done by Arash" autocomplete="off">
+      <button type="submit" aria-label="Send">↑</button>
+    </form>
+  </footer>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>

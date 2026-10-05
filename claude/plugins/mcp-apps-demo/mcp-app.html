@@ -43,13 +43,13 @@
           <svg id="chart" role="img" aria-label="STCs per month"></svg>
         </figure>
 
-        <table>
+        <div class="table-wrap"><table>
           <thead><tr><th>Job</th><th>Customer</th><th>Location</th><th>Installer</th><th class="num">kW</th><th class="num">STCs</th><th>Status</th></tr></thead>
           <tbody id="rows"></tbody>
-        </table>
+        </table></div>
 
         <div class="selection">
-          <p id="selection-text" class="muted small">Click a job to select it. Claude will know which one you picked.</p>
+          <p id="selection-text" class="selection-text muted small">Click a job to select it. Claude will know which one you picked.</p>
           <button id="ask-btn" disabled><span data-icon="chat"></span>Ask Claude about this job</button>
         </div>
       </div>
@@ -64,7 +64,7 @@
     <section id="form-view" hidden>
       <p class="hint" id="form-hint">Fill in the details, then press Submit.</p>
       <form id="job-form" class="form" novalidate>
-        <label>Customer <input name="customer" placeholder="e.g. Priya Sharma" autocomplete="off"></label>
+        <label>Customer <input name="customer" placeholder="e.g. Shirin Karimi" autocomplete="off"></label>
         <label>Suburb <input name="suburb" placeholder="e.g. Bondi" autocomplete="off"></label>
         <label>State
           <select name="region"><option value="">Choose…</option><option>NSW</option><option>VIC</option><option>QLD</option><option>SA</option><option>WA</option></select>
@@ -74,7 +74,7 @@
           <select name="installer"><option value="">Not assigned</option></select>
         </label>
         <label class="wide">Notes <textarea name="notes" rows="2"></textarea></label>
-        <p class="wide muted small" id="estimate"></p>
+        <div class="wide estimate" id="estimate" hidden></div>
         <div class="wide">
           <button type="submit" id="submit-btn"><span data-icon="check"></span>Submit job</button>
         </div>

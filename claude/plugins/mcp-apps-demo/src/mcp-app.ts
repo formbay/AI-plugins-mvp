@@ -148,12 +148,16 @@ function renderDashboard(d: Dashboard) {
   if (empty) return renderEmpty(d);
 
   // Max 4 data points per card (Claude's design guide).
-  const tile = (label: string, value: string | number) => el("div", { className: "tile" }, el("div", { className: "muted small" }, label), el("div", { className: "tile-value" }, String(value)));
+  const tile = (iconName: string, label: string, value: string | number, extra?: Node) =>
+    el("div", { className: "tile" }, el("div", { className: "tile-label" }, iconEl(iconName), label), el("div", { className: "tile-value" }, String(value)), ...(extra ? [extra] : []));
+  const pct = d.totals.jobs ? Math.round((d.totals.approved / d.totals.jobs) * 100) : 0;
+  const bar = el("div", { className: "progress" }, el("span"));
+  (bar.firstChild as HTMLElement).style.width = `${pct}%`;
   $("tiles").replaceChildren(
-    tile("Jobs", d.totals.jobs),
-    tile("STCs", d.totals.stcs.toLocaleString()),
-    tile("Capacity", `${d.totals.kw} kW`),
-    tile("Approved", `${d.totals.approved} of ${d.totals.jobs}`),
+    tile("list", "Jobs", d.totals.jobs),
+    tile("sun", "STCs", d.totals.stcs.toLocaleString()),
+    tile("bolt", "Capacity", `${d.totals.kw} kW`),
+    tile("check", "Approved", `${pct}%`, bar),
   );
   renderChart(d.monthly);
 
@@ -163,12 +167,12 @@ function renderDashboard(d: Dashboard) {
         "tr",
         { className: j.id === selected?.id ? "selected" : "", tabIndex: 0 },
         el("td", { className: "mono muted" }, j.id),
-        el("td", {}, j.customer),
+        el("td", {}, el("span", { className: "person" }, el("span", { className: `avatar a${avatarColor(j.customer)}` }, initials(j.customer)), j.customer)),
         el("td", { className: "muted" }, `${j.suburb}, ${j.region}`),
         el("td", {}, j.installer),
         el("td", { className: "num" }, String(j.systemKw)),
         el("td", { className: "num" }, String(j.stcs)),
-        el("td", {}, el("span", { className: `badge ${j.status.toLowerCase()}` }, j.status)),
+        el("td", {}, el("span", { className: `badge ${j.status.toLowerCase()}` }, el("i"), j.status)),
       );
       row.addEventListener("click", () => selectJob(j));
       row.addEventListener("keydown", (e) => (e.key === "Enter" || e.key === " ") && (e.preventDefault(), selectJob(j)));
@@ -176,6 +180,9 @@ function renderDashboard(d: Dashboard) {
     }),
   );
 }
+
+const initials = (name: string) => name.replace(/\./g, "").split(/\s+/).map((w) => w[0]).join("").slice(0, 2).toUpperCase();
+const avatarColor = (name: string) => [...name].reduce((a, c) => a + c.charCodeAt(0), 0) % 5;
 
 function renderEmpty(d: Dashboard) {
   const where = Object.entries(d.facets.regions).filter(([, n]) => n).map(([st]) => st);
@@ -191,21 +198,26 @@ function renderEmpty(d: Dashboard) {
 
 function renderChart(data: { month: string; stcs: number }[]) {
   const svg = $("chart") as unknown as SVGSVGElement;
-  const W = 600, H = 160, padB = 20, padT = 16;
+  const W = 600, H = 170, padB = 22, padT = 18;
   svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
   const max = Math.max(1, ...data.map((d) => d.stcs));
   const band = W / Math.max(1, data.length);
-  const bar = Math.min(48, band * 0.55);
-  svg.innerHTML = data
+  const bar = Math.min(44, band * 0.5);
+  const inner = H - padB - padT;
+  const grid = [0.5, 1].map((t) => `<line class="grid" x1="0" x2="${W}" y1="${H - padB - inner * t}" y2="${H - padB - inner * t}"/>`).join("");
+  const bars = data
     .map((d, i) => {
-      const h = (d.stcs / max) * (H - padB - padT);
+      const h = Math.max(3, (d.stcs / max) * inner);
       const x = i * band + band / 2;
+      const top = d.stcs === max ? " top" : "";
       const label = new Date(`${d.month}-01T00:00:00`).toLocaleDateString([], { month: "short" });
-      return `<rect class="bar" x="${x - bar / 2}" y="${H - padB - h}" width="${bar}" height="${h}" rx="3"><title>${label}: ${d.stcs} STCs</title></rect>
-        <text class="value" x="${x}" y="${H - padB - h - 4}" text-anchor="middle">${d.stcs}</text>
-        <text class="axis" x="${x}" y="${H - 4}" text-anchor="middle">${label}</text>`;
+      return `<rect class="bar${top}" x="${x - bar / 2}" y="${H - padB - h}" width="${bar}" height="${h}" rx="6"><title>${label}: ${d.stcs} STCs</title></rect>
+        <text class="value${top}" x="${x}" y="${H - padB - h - 6}" text-anchor="middle">${d.stcs}</text>
+        <text class="axis" x="${x}" y="${H - 5}" text-anchor="middle">${label}</text>`;
     })
     .join("");
+  svg.innerHTML = `<defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f59e0b"/><stop offset="1" stop-color="#d97706" stop-opacity="0.55"/></linearGradient></defs>
+    ${grid}<line class="baseline" x1="0" x2="${W}" y1="${H - padB}" y2="${H - padB}"/>${bars}`;
 }
 
 async function loadDashboard(region: string, installer: string) {
@@ -220,7 +232,11 @@ async function loadDashboard(region: string, installer: string) {
 async function selectJob(job: Job) {
   selected = job;
   document.querySelectorAll("#rows tr").forEach((tr, i) => tr.classList.toggle("selected", dashboard?.jobs[i]?.id === job.id));
-  $("selection-text").textContent = `Selected ${job.id}: ${job.customer}, ${job.suburb} ${job.region}, ${job.systemKw} kW, ${job.stcs} STCs, ${job.status}, by ${job.installer}.`;
+  $("selection-text").replaceChildren(
+    el("span", { className: `avatar a${avatarColor(job.customer)}` }, initials(job.customer)),
+    el("span", {}, el("strong", {}, `${job.customer} · ${job.id}`), el("br"), el("span", { className: "muted small" }, `${job.suburb} ${job.region} · ${job.systemKw} kW · ${job.stcs} STCs · ${job.status} · by ${job.installer}`)),
+  );
+  $("selection-text").classList.add("picked");
   ($("ask-btn") as HTMLButtonElement).disabled = superseded;
   if (superseded) return;
   try {
@@ -273,7 +289,9 @@ function updateForm() {
   const missing = Object.keys(REQUIRED).filter((n) => !field(n).value.trim());
   for (const n of Object.keys(REQUIRED)) field(n).closest("label")!.classList.toggle("needed", missing.includes(n));
   const kw = Number(field("systemKw").value), zone = ZONE_RATING[field("region").value];
-  $("estimate").textContent = kw > 0 && zone ? `Estimated ${Math.floor(kw * zone * 5 * 2)} STCs (rough guide).` : "";
+  const est = $("estimate");
+  est.hidden = !(kw > 0 && zone);
+  if (!est.hidden) est.replaceChildren(iconEl("sun"), el("span", {}, el("strong", { className: "est-num" }, String(Math.floor(kw * zone * 5 * 2))), " STCs estimated"), el("span", { className: "muted small" }, "rough guide"));
   return missing;
 }
 form.addEventListener("input", updateForm);

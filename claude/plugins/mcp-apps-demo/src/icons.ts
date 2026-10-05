@@ -9,6 +9,8 @@ const PATHS: Record<string, string> = {
   collapse: '<path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/>',
   chat: '<path d="M4 5h16v11H9l-5 4V5Z"/>',
   check: '<path d="m5 12 5 5L20 7"/>',
+  list: '<path d="M8 6h12M8 12h12M8 18h12"/><circle cx="4" cy="6" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="4" cy="18" r="1"/>',
+  bolt: '<path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z"/>',
 };
 
 export function icon(name: string): string {

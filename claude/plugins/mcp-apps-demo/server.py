@@ -83,15 +83,15 @@ class Job:
 
 
 JOBS: list[Job] = [
-    Job("FB-1001", "A. Patel", "Parramatta", "NSW", 6.6, 92, "Approved", "2026-05-04", "Aman Gill"),
+    Job("FB-1001", "D. Ahmadi", "Parramatta", "NSW", 6.6, 92, "Approved", "2026-05-04", "Arash Hosseini"),
     Job("FB-1002", "J. Nguyen", "Geelong", "VIC", 10.2, 131, "Submitted", "2026-06-11", "Ben Carter"),
-    Job("FB-1003", "M. Rossi", "Toowoomba", "QLD", 13.3, 186, "Approved", "2026-06-19", "Aman Gill"),
-    Job("FB-1004", "S. Kaur", "Penrith", "NSW", 8.0, 111, "Rejected", "2026-07-02", "Chloe Tran"),
+    Job("FB-1003", "M. Rossi", "Toowoomba", "QLD", 13.3, 186, "Approved", "2026-06-19", "Arash Hosseini"),
+    Job("FB-1004", "L. Rahimi", "Penrith", "NSW", 8.0, 111, "Rejected", "2026-07-02", "Chloe Tran"),
     Job("FB-1005", "L. Chen", "Glenelg", "SA", 6.6, 90, "Draft", "2026-07-15", "Ben Carter"),
-    Job("FB-1006", "R. Smith", "Fremantle", "WA", 9.9, 138, "Submitted", "2026-08-01", "Dev Mehta"),
+    Job("FB-1006", "R. Smith", "Fremantle", "WA", 9.9, 138, "Submitted", "2026-08-01", "Liam Walker"),
     Job("FB-1007", "D. Brown", "Ballarat", "VIC", 5.0, 63, "Approved", "2026-08-20", "Chloe Tran"),
-    Job("FB-1008", "K. Singh", "Cairns", "QLD", 15.0, 214, "Submitted", "2026-09-09", "Aman Gill"),
-    Job("FB-1009", "E. Wilson", "Newcastle", "NSW", 7.4, 102, "Draft", "2026-09-22", "Dev Mehta"),
+    Job("FB-1008", "J. Thompson", "Cairns", "QLD", 15.0, 214, "Submitted", "2026-09-09", "Arash Hosseini"),
+    Job("FB-1009", "E. Wilson", "Newcastle", "NSW", 7.4, 102, "Draft", "2026-09-22", "Liam Walker"),
     Job("FB-1010", "T. Okafor", "Townsville", "QLD", 8.8, 121, "Rejected", "2026-09-27", "Chloe Tran"),
 ]
 
@@ -228,14 +228,14 @@ apps = Apps()
     title="Show solar jobs dashboard",
     description=(
         "Opens an interactive dashboard of Formbay demo solar jobs: KPI tiles, an STC-per-month chart and a jobs "
-        "table. Use when the user wants to see, find, filter or manage jobs, e.g. 'show QLD jobs done by Aman'. "
+        "table. Use when the user wants to see, find, filter or manage jobs, e.g. 'show QLD jobs done by Arash'. "
         "Filter by state and/or installer. Demo data only."
     ),
 )
 @friendly
 def show_solar_dashboard(
     region: Annotated[str, Field(description="State: NSW, VIC, QLD, SA, WA, or All")] = "All",
-    installer: Annotated[str, Field(description="Installer name or part of it, e.g. 'Aman'. Empty = everyone")] = "",
+    installer: Annotated[str, Field(description="Installer name or part of it, e.g. 'Arash'. Empty = everyone")] = "",
     min_stcs: Annotated[int, Field(description="Only include jobs with at least this many STCs")] = 0,
 ) -> CallToolResult:
     if min_stcs < 0:

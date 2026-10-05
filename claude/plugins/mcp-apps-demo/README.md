@@ -25,6 +25,7 @@ You ask Claude ──► Claude calls a tool in server.py
 | `mcp-app.html`, `src/` | The app screen (HTML + TypeScript). Runs in the browser inside Claude. |
 | `dist/mcp-app.html` | The built screen, one self-contained file. `server.py` sends this to Claude. |
 | `.claude-plugin/plugin.json`, `.mcp.json` | Makes it installable as a Claude plugin. |
+| `playground/` | A Claude-like chat page for trying the app locally (see below). |
 
 ## Tools
 
@@ -40,8 +41,8 @@ You ask Claude ──► Claude calls a tool in server.py
 ## What to ask Claude
 
 - "Show me the solar jobs dashboard"
-- "Show QLD jobs done by Aman"
-- "Draft a new job for Priya Sharma in Bondi NSW, 8.2 kW"
+- "Show QLD jobs done by Arash"
+- "Draft a new job for Shirin Karimi in Bondi NSW, 8.2 kW"
 - Click a job, then: "Is anything unusual about this job?"
 
 ## MCP Apps features it shows
@@ -74,13 +75,22 @@ uv run server.py --stdio    # stdio (how Claude Desktop runs it)
 npm install && npm run build   # rebuild dist/mcp-app.html after editing mcp-app.html or src/
 ```
 
-Test without Claude using the official test page:
+### Try it without Claude: the Playground
+
+`playground/` is a small chat page that **pretends to be Claude**. Ask a question
+(or click an example) and the app opens as the answer, just like in Claude. There's
+no AI: simple word matching picks the tool, and the page shows which tool it used,
+what Claude would receive, what the app tells Claude ("Claude now knows: …") and
+any message the app sends into the chat.
 
 ```bash
-git clone https://github.com/modelcontextprotocol/ext-apps.git
-cd ext-apps && npm install && cd examples/basic-host
-SERVERS='["http://localhost:3001/mcp"]' npm start   # open http://localhost:8080
+uv run server.py                       # terminal 1: the MCP server on :3001
+cd playground && npm install && npm start   # terminal 2: open http://localhost:8080
 ```
+
+It reuses the connection and sandbox code from the official
+[basic-host](https://github.com/modelcontextprotocol/ext-apps/tree/main/examples/basic-host)
+example, and sends Claude's real style tokens so the app looks as it will in Claude.
 
 ## Install in Claude
 
