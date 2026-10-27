@@ -6,7 +6,7 @@ Formbay's authenticated MCP services.
 | Integration | Package | Marketplace |
 | --- | --- | --- |
 | Claude | [fb-connector](claude/plugins/fb-connector/README.md) | [.claude-plugin/marketplace.json](.claude-plugin/marketplace.json) |
-| OpenAI Codex / ChatGPT desktop | [Formbay Job Push](plugins/fb-job-push/README.md) | [.agents/plugins/marketplace.json](.agents/plugins/marketplace.json) |
+| OpenAI Codex / ChatGPT desktop | [Formbay Job Push](plugins/fb-job-assistant/README.md) | [.agents/plugins/marketplace.json](.agents/plugins/marketplace.json) |
 
 The Claude plugin and its marketplace remain independent of the OpenAI package.
 The Claude plugin includes its existing `fb-connector` and `pylon-scraper` skills.
@@ -21,7 +21,7 @@ AI-plugins-mvp/
 |-- .claude-plugin/marketplace.json       # existing Claude catalog
 |-- claude/plugins/fb-connector/          # existing Claude package
 |-- .agents/plugins/marketplace.json     # OpenAI catalog: formbay-openai
-|-- plugins/fb-job-push/
+|-- plugins/fb-job-assistant/
 |   |-- .codex-plugin/plugin.json
 |   |-- .mcp.json                        # authenticated Streamable HTTP
 |   |-- examples/app.json.template       # optional registered-app wiring
@@ -42,7 +42,7 @@ For Claude, use the repository's existing Claude marketplace and install
 for its tools and browser requirements.
 
 For OpenAI, register this repository root as a marketplace and install
-`fb-job-push` from `formbay-openai`. See the [OpenAI installation instructions](plugins/fb-job-push/README.md#install-the-repository-marketplace).
+`fb-job-assistant` from `formbay-openai`. See the [OpenAI installation instructions](plugins/fb-job-assistant/README.md#install-the-repository-marketplace).
 The bundled `.mcp.json` package supports desktop use. ChatGPT web needs a
 registered MCP app and `.app.json` wiring; the OpenAI README documents that
 separate setup and includes an inactive template. See

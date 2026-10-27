@@ -1,5 +1,5 @@
 {
-  "name": "fb-job-push",
+  "name": "fb-job-assistant",
   "version": "0.2.0",
   "description": "Create and look up Formbay installation jobs through the authenticated FB Job Push MCP server.",
   "author": {

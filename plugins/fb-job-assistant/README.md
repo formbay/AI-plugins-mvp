@@ -30,7 +30,7 @@ The MCP resource audience is the complete endpoint URL, including `/mcp`.
 ## Install the repository marketplace
 
 The OpenAI catalog is [../../.agents/plugins/marketplace.json](../../.agents/plugins/marketplace.json).
-Its name is `formbay-openai`; install `fb-job-push` from that source.
+Its name is `formbay-openai`; install `fb-job-assistant` from that source.
 
 For an unpublished local checkout, register the repository root:
 

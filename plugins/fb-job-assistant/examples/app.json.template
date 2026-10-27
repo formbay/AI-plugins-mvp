@@ -1,6 +1,6 @@
 {
   "apps": {
-    "fb-job-push": {
+    "fb-job-assistant": {
       "id": "REPLACE_WITH_REGISTERED_APP_ID",
       "required": true
     }
