@@ -11,7 +11,7 @@
   "keywords": ["formbay", "jobs", "solar", "battery", "swh", "mcp"],
   "skills": "./skills/",
   "interface": {
-    "displayName": "Formbay Job Push",
+    "displayName": "Formbay Job Assistant",
     "shortDescription": "Create and look up Formbay installation jobs.",
     "longDescription": "Use authenticated Formbay tools to look up and create installation jobs, prepare Pylon imports, and calculate solar STC and battery BSTC estimates with exact postcode zones and dated battery factors.",
     "developerName": "Formbay Trading Pty Ltd",
