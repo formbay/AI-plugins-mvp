@@ -1,0 +1,4 @@
+interface:
+  display_name: "Formbay Job Lookup"
+  short_description: "Read your Formbay identity and installation jobs."
+  default_prompt: "Use $job-lookup to list my Formbay jobs."

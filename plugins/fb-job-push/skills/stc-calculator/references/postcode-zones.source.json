@@ -1,0 +1,11 @@
+{
+  "source_file": "postcode-zones-source.pdf",
+  "source_url": "https://cer.gov.au/document/postcode-zone-ratings-and-zones-solar-panel-systems",
+  "source_sha256": "58cd05502692011b22b314f48be673e80a74e7775d569aa2989a956968dc72e3",
+  "document_effective_date": "2020-01-01",
+  "extracted_on": "2026-09-22",
+  "page_count": 8,
+  "range_count": 137,
+  "csv_sha256": "7992f3f4adb93ac53501f89e6ae5c7d97c6122fb25cc2c24f155138ff7dc54f1",
+  "note": "Inclusive numeric ranges; not a register of valid delivery postcodes or suburbs."
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Formbay Job Push"
+  short_description: "Prepare and create authorized Formbay jobs."
+  default_prompt: "Use $job-push to prepare a Formbay installation job."
