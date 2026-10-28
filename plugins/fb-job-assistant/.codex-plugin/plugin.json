@@ -18,10 +18,10 @@
     "category": "Productivity",
     "capabilities": ["Read", "Write"],
     "defaultPrompt": [
-      "Show my Formbay jobs.",
+      "Browse the product catalogue.",
       "Calculate solar STCs and battery BSTCs for my installation.",
       "Help me prepare a PV and battery job for Formbay."
     ]
   },
-  "mcpServers": "./.mcp.json"
+  "apps": "./.app.json"
 }

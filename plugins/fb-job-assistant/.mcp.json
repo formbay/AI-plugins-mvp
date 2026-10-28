@@ -1,8 +1,0 @@
-{
-  "mcpServers": {
-    "fb-job-assistant": {
-      "type": "http",
-      "url": "https://mcp.13-236-107-181.nip.io/mcp"
-    }
-  }
-}

@@ -1,0 +1,8 @@
+{
+  "apps": {
+    "fb-job-assistant": {
+      "id": "asdk_app_6ae165be3e448191953ddbd5df80dd0b",
+      "required": true
+    }
+  }
+}
