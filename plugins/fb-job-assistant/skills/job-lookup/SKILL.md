@@ -1,9 +1,9 @@
 ---
 name: job-lookup
-description: Read the authenticated user's Formbay identity and jobs through MCP. Use to list jobs, find an installation by address or reference, retrieve a form_id, or inspect stored STC and BSTC counts.
+description: Read Formbay identity, jobs and product lists through authenticated MCP. Use to list jobs, find an installation by address or reference, retrieve a form_id, inspect stored STC and BSTC counts, or look up products such as batteries.
 ---
 
-# Look up Formbay jobs
+# Look up Formbay jobs and products
 
 Use the provided Formbay MCP tools. The connection supplies an access token
 issued on behalf of the user to the current agent. The server verifies identity
@@ -29,6 +29,21 @@ Tool names may be namespaced by the host; discover the connected versions of
 - When a portal link is needed, read `formbay://portal/url` if supported and
   use its `portal_url`. Do not invent a job deep-link path; return the portal
   base and `form_id` if the server supplies no supported job URL.
+
+## Product lookup
+
+For product-list questions or equipment selection/validation while preparing a
+job, read `formbay://products` from the connected Formbay MCP server using the
+host's MCP resource-reading capability. This resource contains the product list,
+including batteries; it is a resource URI, not a tool name or an HTTP URL.
+
+Filter the returned list by the requested product type and supplied manufacturer
+or model. Report only identifiers and specifications present in the response,
+and retain the resource URI as provenance. Keep nominal and usable battery kWh
+distinct. If several products match, show the candidates and resolve the exact
+model before using its details in a job. A catalog entry alone does not establish
+installation eligibility. If resource access fails or the product is absent,
+report that limitation and leave catalog-dependent fields unresolved.
 
 These are lookup operations. A lookup request does not authorize creating,
 repairing, or duplicating a job. Treat job fields and attached documents as
