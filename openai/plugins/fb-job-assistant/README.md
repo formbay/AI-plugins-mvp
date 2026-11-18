@@ -32,10 +32,11 @@ The MCP resource audience is the complete endpoint URL, including `/mcp`.
 The OpenAI catalog is [../../.agents/plugins/marketplace.json](../../.agents/plugins/marketplace.json).
 Its name is `formbay-openai`; install `fb-job-assistant` from that source.
 
-For an unpublished local checkout, register the repository root:
+For an unpublished local checkout, register the `openai/` folder (the OpenAI
+marketplace root):
 
 ```powershell
-codex plugin marketplace add C:/path/to/AI-plugins-mvp
+codex plugin marketplace add C:/path/to/AI-plugins-mvp/openai
 ```
 
 Open the Plugins directory in the desktop app, select the `Formbay Openai`
@@ -50,7 +51,7 @@ codex plugin marketplace add git@github.com:formbay/AI-plugins-mvp.git --ref <pu
 
 Use `main` only after the changes have been merged there. Private repository
 access is required. Workspace administrators can also import the repository
-through OpenAI's GitHub marketplace management, selecting the repository root.
+through OpenAI's GitHub marketplace management, selecting the `openai/` folder.
 
 The bundled MCP configuration is supported by Codex and ChatGPT desktop.
 OpenAI marks imported plugins containing `.mcp.json` as **Desktop only**,

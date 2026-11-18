@@ -12,7 +12,7 @@
   "plugins": [
     {
       "name": "fb-connector",
-      "source": "./claude/plugins/fb-connector",
+      "source": "./plugins/fb-connector",
       "description": "Formbay connector — read solar-proposal data from partner web apps (e.g. Pylon / app.getpylon.com) and push projects into the Formbay job queue via the fb-job-push MCP server.",
       "version": "0.1.0",
       "author": {
